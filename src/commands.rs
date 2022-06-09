@@ -220,11 +220,11 @@ pub async fn echo(
     Ok(())
 }
 pub async fn res_quote(b: AutoSend<Bot>, m: Message) -> Result<(), Box<dyn Error + Send + Sync>> {
-    let mut rng = thread_rng();
-    let roll: bool = rng.gen_bool(1.0 / 10.0);
-    if roll {
-        b.send_message(m.chat.id, quote(m)).await?;
-    }
+    // let mut rng = thread_rng();
+    // let roll: bool = rng.gen_bool(1.0 / 10.0);
+    // if roll {
+    b.send_message(m.chat.id, quote(m)).await?;
+    // }
     Ok(())
 }
 

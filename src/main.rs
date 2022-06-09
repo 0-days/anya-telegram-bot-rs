@@ -33,7 +33,8 @@ async fn main() {
         .branch(dptree::entry().filter_command::<commands::Command>().endpoint(commands::answer))
         .branch(
             dptree::filter(|msg: Message| msg.text().is_some())
-                .branch(filter(|| commands::roll_dice())).endpoint(commands::res_quote),
+                // .branch(filter(|| commands::roll_dice())).endpoint(commands::res_quote),
+                .branch(endpoint(commands::res_quote)),
         );
 
     // let handler = dptree::entry()
