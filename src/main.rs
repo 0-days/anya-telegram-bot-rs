@@ -3,6 +3,7 @@ use teloxide::{ prelude::* };
 use teloxide::dptree::endpoint;
 
 mod commands;
+mod youtube;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +19,8 @@ async fn main() {
         .branch(
             dptree::filter(|msg: Message| msg.text().is_some())
                 // .branch(filter(|| commands::roll_dice())).endpoint(commands::res_quote),
-                .branch(endpoint(commands::res_quote)),
+                    .branch(dptree::filter(|m: Message| youtube::contains_yt(m))).endpoint(youtube::answer)
+                    .branch(endpoint(commands::res_quote)),
         );
 
     Dispatcher::builder(bot, handler)
