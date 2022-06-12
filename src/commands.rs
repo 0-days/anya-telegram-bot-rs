@@ -1,6 +1,7 @@
 use std::error::Error;
 
-use teloxide::{ prelude::*, utils::command::BotCommands, types::InputFile };
+use teloxide::{ prelude::*, utils::command::BotCommands, types::InputFile, types::ParseMode };
+use teloxide::{ utils::markdown::{ link, bold } };
 use rand::{ Rng, thread_rng };
 
 mod voices;
@@ -23,6 +24,11 @@ pub enum Command {
     Bio,
     #[command()]
     Echo(String),
+    #[command()]
+    Bold(String),
+    #[command()]
+    Link(String, String)
+    // #[command(description = "Exe")]
 }
 
 pub async fn answer(
@@ -67,6 +73,17 @@ pub async fn answer(
         Command::Echo(text) => {
             // let command = Command::parse(message.text().unwrap(), "").unwrap();
             bot.send_message(message.chat.id, text).await?
+        }
+        Command::Bold(text) => {
+            bot.send_message(message.chat.id, bold(&text))
+                .parse_mode(ParseMode::MarkdownV2)
+                .await?
+        }
+        Command::Link(caption, url) => {
+            bot.send_message(message.chat.id, format!("▫️{}\n", link(&url, &caption)))
+                .reply_to_message_id(message.id)
+                .parse_mode(ParseMode::MarkdownV2)
+                .await?
         }
     };
 
