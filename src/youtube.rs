@@ -16,12 +16,6 @@ struct MetaData {
     items: Vec<Item>,
 }
 
-// #[derive(Deserialize, Debug)]
-// struct MetaData {
-//     kind: String,
-//     etag: String,
-// }
-
 #[derive(Deserialize, Debug)]
 struct Item {
     // id: String,
