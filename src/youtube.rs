@@ -85,9 +85,9 @@ impl MetaData {
             コメント数: {}\n",
             bold(&escape(&snippet.title)),
             &escape(&snippet.published_at),
-            &stat.view_count,
-            &stat.like_count,
-            &stat.comment_count,
+            bold(&stat.view_count),
+            bold(&stat.like_count),
+            bold(&stat.comment_count),
         );
 
         if let Some(lang) = &snippet.default_language {
