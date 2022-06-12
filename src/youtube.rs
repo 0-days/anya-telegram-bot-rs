@@ -1,7 +1,6 @@
 use std::{error::Error, collections::HashSet};
 use std::borrow::Cow;
 
-// use log::Metadata;
 use regex::Regex;
 use lazy_static::lazy_static;
 use reqwest;
