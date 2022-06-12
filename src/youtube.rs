@@ -96,7 +96,7 @@ impl MetaData {
         if let Some(lang) = &snippet.default_audio_language {
             s.push_str(&format!("音声言語: {}\n", escape(&lang)))
         }
-        s.push_str(&format!("{} より\n\n", link(&format!("https://youtube.com/channel/{}", &snippet.channel_id), &snippet.channel_title)));
+        s.push_str(&format!("{} より\n\n", link(&format!("https://youtube.com/channel/{}", &snippet.channel_id), &escape(&snippet.channel_title))));
 
         let thumbnails = &snippet.thumbnails;
         s.push_str("サムネイル:\n");
