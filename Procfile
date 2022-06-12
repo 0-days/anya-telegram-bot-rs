@@ -1,1 +1,1 @@
-worker: ./target/release/anya-bot
+web: ./target/release/anya-bot
