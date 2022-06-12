@@ -1,6 +1,3 @@
-use std::collections::HashMap;
-use std::fs::Metadata;
-// use teloxide::{ prelude::* };
 use std::{error::Error, collections::HashSet};
 use std::borrow::Cow;
 
@@ -11,7 +8,7 @@ use reqwest;
 use reqwest::header::REFERER;
 use serde::{ Deserialize };
 
-use teloxide::{ prelude::*, utils::command::BotCommands, types::InputFile, types::ParseMode };
+use teloxide::{ prelude::*, types::ParseMode };
 use teloxide::{ utils::markdown::{ link, bold, escape } };
 
 #[derive(Deserialize, Debug)]
@@ -28,7 +25,7 @@ struct MetaData {
 
 #[derive(Deserialize, Debug)]
 struct Item {
-    id: String,
+    // id: String,
     snippet: Snippet,
     statistics: Statistics,
 }
@@ -58,8 +55,8 @@ struct Thumbnails {
 #[derive(Deserialize, Debug)]
 struct Thumbnail {
     url: String,
-    width: u32,
-    height: u32,
+    // width: u32,
+    // height: u32,
 }
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -145,13 +142,8 @@ fn extract_query(s: &str) -> HashSet<Cow<str>> {
 async fn metadata(s: &str) -> Result<MetaData, reqwest::Error> {
     const DEST: &str = "https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAa-o55aIMt4YC0mhPyp8WfGql5DVg_fp4&part=snippet,statistics,recordingDetails,status,liveStreamingDetails,localizations,contentDetails,topicDetails&id=";
     const TAIL: &str = "&_=1654902130800";
-    // const YT: &str = "youtube.com/watch?v=";
-
-    // let yt = format!("{YT}{s}");
 
     let client = reqwest::Client::new();
-        // .header(REFERER, "https://mattw.io/");
-        // .build();
     let body = client
         .get(format!("{DEST}{s}{TAIL}"))
         .header(REFERER, "https://mattw.io/")
@@ -159,7 +151,6 @@ async fn metadata(s: &str) -> Result<MetaData, reqwest::Error> {
         .await?
         .json::<MetaData>()
         .await?;
-    // Ok(MetaData{title:"".to_string()})
     Ok(body)
 }
 
@@ -174,6 +165,5 @@ pub async fn answer(b: AutoSend<Bot>, m: Message) -> Result<(), Box<dyn Error + 
             .parse_mode(ParseMode::MarkdownV2)
             .await?;
     }
-    // b.send_message(m.chat.id, format!("{:#?}", extract_query(m.text().unwrap()))).await?;
     Ok(())
 }
